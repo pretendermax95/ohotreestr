@@ -1,14 +1,25 @@
 const STORAGE_KEY = "hunter-registry-data";
 const SESSION_KEY = "hunter-registry-session";
 
-const seed = [
+const previousSeed = [
   { id: 1, lastName: "Соколов", firstName: "Алексей", middleName: "Викторович", birthDate: "1985-04-12", phone: "+7 (912) 555-24-18", certificate: "ОХ-458921", region: "Московская область", status: "active", docs: [{ type: "Охотничий билет", number: "ОХ-458921", until: "2028-05-20" }], permits: [{ number: "Р-2026-091", type: "Сезонное", until: "2026-12-31", status: "active" }] },
   { id: 2, lastName: "Орлова", firstName: "Марина", middleName: "Сергеевна", birthDate: "1991-09-03", phone: "+7 (903) 221-09-44", certificate: "ОХ-334107", region: "Тверская область", status: "active", docs: [{ type: "Медицинская справка", number: "МС-8812", until: "2026-10-12" }], permits: [] },
   { id: 3, lastName: "Волков", firstName: "Илья", middleName: "Андреевич", birthDate: "1978-12-22", phone: "+7 (916) 832-61-09", certificate: "ОХ-119840", region: "Московская область", status: "suspended", docs: [{ type: "Разрешение на оружие", number: "РОХ-77109", until: "2026-08-01" }], permits: [{ number: "Р-2025-311", type: "Разовая", until: "2025-11-30", status: "expired" }] }
 ];
 
+const seed = [
+  { id: 1, lastName: "Раҳмонов", firstName: "Фарҳод", middleName: "Шавкатович", birthDate: "1985-04-12", phone: "+992 917 XXX XXX", certificate: "ОХ-458921", region: "Душанбе", status: "active", docs: [{ type: "Охотничий билет", number: "ОХ-458921", until: "2028-05-20" }], permits: [{ number: "Р-2026-091", type: "Сезонное", until: "2026-12-31", status: "active" }] },
+  { id: 2, lastName: "Каримова", firstName: "Мадина", middleName: "Фирдавсовна", birthDate: "1991-09-03", phone: "+992 918 XXX XXX", certificate: "ОХ-334107", region: "Согдийская область", status: "active", docs: [{ type: "Медицинская справка", number: "МС-8812", until: "2026-10-12" }], permits: [] },
+  { id: 3, lastName: "Саидов", firstName: "Ҷамшед", middleName: "Низомович", birthDate: "1978-12-22", phone: "+992 919 XXX XXX", certificate: "ОХ-119840", region: "Хатлонская область", status: "suspended", docs: [{ type: "Разрешение на оружие", number: "РОХ-77109", until: "2026-08-01" }], permits: [{ number: "Р-2025-311", type: "Разовая", until: "2025-11-30", status: "expired" }] }
+];
+
+const storedHunters = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+const hunters = storedHunters
+  ? JSON.stringify(storedHunters) === JSON.stringify(previousSeed) ? seed : storedHunters
+  : seed;
+
 let state = {
-  hunters: JSON.parse(localStorage.getItem(STORAGE_KEY) || "null") || seed,
+  hunters,
   view: "dashboard",
   query: "",
   status: "all",
